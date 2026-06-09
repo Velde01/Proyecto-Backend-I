@@ -1,0 +1,8 @@
+# En node_modules se guardan las dependencias del proyecto, no es necesario subirlo a github
+node_modules 
+
+# Almacena las claves secretas y otras variables de entorno, no es necesario subirlo a github
+.env
+
+# Almacena los archivos compilados, no es necesario subirlo a github
+dist
