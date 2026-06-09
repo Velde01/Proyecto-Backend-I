@@ -14,18 +14,18 @@ Dos grupos de rutas:
 Rutas implementadas con Express Routers
 
 ## 🛒 Endpoints de Productos (/api/products)
-Método	Ruta	Función
-GET	    /	    Obtener todos los productos
-GET	    /:pid	Obtener producto por ID
-POST	/	    Crear nuevo producto (ID se autogenera)
-PUT	    /:pid	Actualizar campos del producto excepto el ID
-DELETE	/:pid	Eliminar producto por ID
+Método	Ruta	
+GET     /api/products
+GET     /api/products/:pid
+POST    /api/products
+PUT     /api/products/:pid
+DELETE  /api/products/:pid
 
 ## 🧺 Endpoints de Carritos (/api/carts)
-Método	Ruta	            Función
-POST	/	                Crear nuevo carrito con ID único
-GET	    /:cid	            Obtener todos los productos del carrito
-POST	/:cid/product/:pid	Agregar producto al carrito (aumenta quantity si ya existe)
+Método	Ruta	      
+POST    /api/carts
+GET     /api/carts/:cid
+POST    /api/carts/:cid/product/:pid
 
 ## 💾 Persistencia de Datos
 Se utiliza el módulo FileSystem (fs)

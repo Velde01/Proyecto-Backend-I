@@ -1,0 +1,13 @@
+[
+  {
+    "id": 1,
+    "title": "Mouse Gamer",
+    "description": "Mouse RGB",
+    "code": "M001",
+    "price": 2000,
+    "status": true,
+    "stock": 20,
+    "category": "Perifericos",
+    "thumbnails": []
+  }
+]
