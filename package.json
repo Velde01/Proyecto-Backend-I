@@ -1,0 +1,26 @@
+{
+  "name": "proyecto-backend-i",
+  "version": "1.0.0",
+  "description": "Desarrollar un servidor que gestione productos y carritos utilizando archivos (products.json y carts.json) como sistema de persistencia.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Velde01/Proyecto-Backend-I.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Velde01/Proyecto-Backend-I/issues"
+  },
+  "homepage": "https://github.com/Velde01/Proyecto-Backend-I#readme",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
