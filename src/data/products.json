@@ -9,5 +9,16 @@
     "stock": 20,
     "category": "Perifericos",
     "thumbnails": []
+  },
+  {
+    "id": 2,
+    "title": "Teclado",
+    "description": "Mecanico",
+    "code": "T001",
+    "price": 4000,
+    "status": true,
+    "stock": 1,
+    "category": "Teclado",
+    "thumbnails": []
   }
 ]

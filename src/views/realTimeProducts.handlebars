@@ -1,0 +1,18 @@
+<h1>Panel de Productos en Tiempo Real</h1>
+
+<form id="productForm">
+    <input type="text" id="title" placeholder="Título" required>
+    <input type="text" id="description" placeholder="Descripción" required>
+    <input type="text" id="code" placeholder="Código" required>
+    <input type="number" id="price" placeholder="Precio" required>
+    <input type="text" id="category" placeholder="Categoría" required>
+    <input type="number" id="stock" placeholder="Stock" required>
+    <button type="submit">Guardar Producto</button>
+</form>
+
+<hr>
+
+<div id="productsList" style="display: flex; flex-wrap: wrap; gap: 15px;"></div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/realTime.js"></script>
