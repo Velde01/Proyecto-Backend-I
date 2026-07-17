@@ -1,0 +1,81 @@
+<div class="container mt-5">
+    <h1 class="mb-4">🛒 Tu Carrito de Compras</h1>
+    <p class="text-muted">ID del Carrito: <strong>{{cart._id}}</strong></p>
+
+    {{#if cart.products.length}}
+        <div class="table-responsive shadow-sm rounded">
+            <table class="table align-middle bg-white">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Producto</th>
+                        <th>Categoría</th>
+                        <th>Precio Unitario</th>
+                        <th class="text-center">Cantidad</th>
+                        <th>Subtotal</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each cart.products}}
+                        <tr>
+                            <td>
+                                <strong>{{this.product.title}}</strong>
+                            </td>
+                            <td>{{this.product.category}}</td>
+                            <td>${{this.product.price}}</td>
+                            <td class="text-center">{{this.quantity}}</td>
+                            <td class="fw-bold">${{this.product.price}}</td>
+                            <td>
+                                <button onclick="removeFromCart('{{../cart._id}}', '{{this.product._id}}')" class="btn btn-danger btn-sm">Eliminar</button>
+                            </td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+        <div class="d-flex justify-content-between align-items-center mt-4">
+            <button onclick="clearCart('{{cart._id}}')" class="btn btn-outline-danger">Vaciar Carrito Completo</button>
+            <a href="/products" class="btn btn-primary">Seguir Comprando</a>
+        </div>
+    {{else}}
+        <div class="alert alert-warning text-center mt-4">
+            <h4>El carrito está vacío</h4>
+            <p>Vuelve al catálogo para agregar productos.</p>
+            <a href="/products" class="btn btn-warning mt-3">Ver Productos</a>
+        </div>
+    {{/if}}
+</div>
+
+<script>
+    async function removeFromCart(cartId, productId) {
+        if (!confirm('¿Seguro que deseas quitar este producto?')) return;
+        try {
+            const response = await fetch(`/api/carts/${cartId}/products/${productId}`, {
+                method: 'DELETE'
+            });
+            if (response.ok) {
+                location.reload();
+            } else {
+                alert('No se pudo eliminar el producto.');
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function clearCart(cartId) {
+        if (!confirm('¿Seguro que deseas vaciar el carrito entero?')) return;
+        try {
+            const response = await fetch(`/api/carts/${cartId}`, {
+                method: 'DELETE'
+            });
+            if (response.ok) {
+                location.reload();
+            } else {
+                alert('No se pudo vaciar el carrito.');
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+</script>

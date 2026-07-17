@@ -1,9 +1,14 @@
-const app = require('./src/app'); // Importamos la configuración de Express
+const app = require('./src/app'); 
 const { Server } = require('socket.io');
-const ProductManager = require('./src/managers/ProductManager');
-
+const mongoose = require('mongoose');
+const productModel = require('./src/models/product.model');
 const PORT = 8080;
-const productManager = new ProductManager();
+const MONGO_URI = 'mongodb+srv://mtbentos_db_user:lileLhn7gltUi9ZJ@backend.sm1hlhv.mongodb.net/?appName=Backend';
+
+// Conexión a MongoDB
+mongoose.connect(MONGO_URI)
+    .then(() => console.log('Conectado a la base de datos MongoDB Atlas'))
+    .catch(error => console.error('Error en la conexión a MongoDB:', error));
 
 // Levantamos el servidor HTTP
 const httpServer = app.listen(PORT, () => {
@@ -17,14 +22,15 @@ io.on('connection', async (socket) => {
     console.log('Un cliente se ha conectado:', socket.id);
 
     // Enviar productos al conectarse
-    const products = await productManager.getProducts();
+    // Usamos .find().lean() para que devuelva un objeto puro de JavaScript (necesario para Handlebars/Sockets)
+    const products = await productModel.find().lean();
     socket.emit('updateProducts', products);
 
     // Recibir nuevo producto
     socket.on('newProduct', async (productData) => {
         try {
-            await productManager.addProduct(productData); 
-            const updatedProducts = await productManager.getProducts();
+            await productModel.create(productData); // Mongoose: crea el producto
+            const updatedProducts = await productModel.find().lean();
             io.emit('updateProducts', updatedProducts); 
         } catch (error) {
             socket.emit('errorNotification', error.message);
@@ -33,8 +39,12 @@ io.on('connection', async (socket) => {
 
     // Eliminar producto
     socket.on('deleteProduct', async (id) => {
-        await productManager.deleteProduct(id);
-        const updatedProducts = await productManager.getProducts();
-        io.emit('updateProducts', updatedProducts);
+        try {
+            await productModel.findByIdAndDelete(id); // Mongoose: busca por ID y elimina
+            const updatedProducts = await productModel.find().lean();
+            io.emit('updateProducts', updatedProducts);
+        } catch (error) {
+            console.error("Error al eliminar producto:", error);
+        }
     });
 });

@@ -1,0 +1,38 @@
+<div class="container mt-5">
+    <div class="card shadow-lg p-4">
+        <div class="row">
+            <div class="col-md-6">
+                <h1 class="display-5 fw-bold">{{product.title}}</h1>
+                <p class="badge bg-secondary fs-6">{{product.category}}</p>
+                <hr>
+                <p class="lead">{{product.description}}</p>
+                <h3 class="text-success">${{product.price}}</h3>
+                <p class="text-muted">Código de Producto: <strong>{{product.code}}</strong></p>
+                <p class="text-muted">Stock Disponible: <strong>{{product.stock}} unidades</strong></p>
+                
+                <div class="mt-4">
+                    <button onclick="addToCart('{{product._id}}')" class="btn btn-success btn-lg px-5">Añadir al Carrito</button>
+                    <a href="/products" class="btn btn-outline-primary btn-lg ms-3">Volver al Catálogo</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    async function addToCart(productId) {
+        const cartId = "6a56c860338e59d877e2fb0b"; 
+        try {
+            const response = await fetch(`/api/carts/${cartId}/product/${productId}`, {
+                method: 'POST'
+            });
+            if (response.ok) {
+                alert('¡Producto agregado al carrito!');
+            } else {
+                alert('Error al agregar el producto.');
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+</script>

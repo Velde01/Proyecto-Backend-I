@@ -1,69 +1,78 @@
-# 🚀 Proyecto Backend I - Coderhouse
+# 🛒 Proyecto Backend I - E-Commerce (Entrega Final)
 
-Este repositorio contiene el desarrollo del proyecto final para el curso de **Programación Backend I: Desarrollo avanzado de Backend**. 
+Este repositorio contiene la **Entrega Final** del curso de **Programación Backend I: Desarrollo Avanzado de Backend** en Coderhouse. 
 
-## 🎯 Objetivo General
-Desarrollar un servidor en Node.js con Express que gestione productos y carritos de compras utilizando archivos JSON como sistema de persistencia (`products.json` y `carts.json`). Además, el proyecto cuenta con un sistema visual utilizando el motor de plantillas **Handlebars** y actualización en tiempo real mediante **WebSockets** (Socket.IO).
+El proyecto consiste en una API RESTful para gestionar el catálogo y carritos de un e-commerce, con vistas dinámicas renderizadas desde el servidor y persistencia de datos en la nube.
 
-## ⚙️ Tecnologías Utilizadas
-* **Node.js** & **Express** (Servidor y ruteo)
-* **FileSystem (`fs`)** (Persistencia de datos)
-* **Express-Handlebars** (Motor de plantillas)
-* **Socket.IO** (Comunicación bidireccional en tiempo real)
+## 🚀 Tecnologías Utilizadas
 
----
+- **Node.js** & **Express.js** (Servidor web y ruteo)
+- **MongoDB Atlas** & **Mongoose** (Base de datos en la nube y ODM)
+- **mongoose-paginate-v2** (Paginación avanzada de productos)
+- **Handlebars** (Motor de plantillas para las vistas)
+- **Socket.io** (Comunicación en tiempo real)
 
-## 🖼️ Vistas (Frontend)
-El proyecto incluye una interfaz gráfica para visualizar e interactuar con los datos de la API.
+## 🎯 Requisitos Cumplidos en esta Entrega
 
-| Ruta | Descripción |
-| :--- | :--- |
-| `/` | **Home:** Muestra la lista estática de productos. Se actualiza únicamente al recargar la página. |
-| `/realtimeproducts` | **Tiempo Real:** Muestra la lista de productos y un formulario para agregar/eliminar. Todo cambio se refleja instantáneamente en todos los clientes conectados mediante WebSockets. |
-
----
-
-## 🛒 API Endpoints - Productos (`/api/products`)
-| Método | Ruta | Descripción |
-| :--- | :--- | :--- |
-| **GET** | `/api/products` | Devuelve la lista completa de productos. |
-| **GET** | `/api/products/:pid` | Devuelve un producto específico según su ID. |
-| **POST** | `/api/products` | Crea un nuevo producto. |
-| **PUT** | `/api/products/:pid` | Actualiza los campos de un producto existente por su ID. |
-| **DELETE** | `/api/products/:pid` | Elimina un producto por su ID. |
-
-## 🧺 API Endpoints - Carritos (`/api/carts`)
-| Método | Ruta | Descripción |
-| :--- | :--- | :--- |
-| **POST** | `/api/carts` | Crea un carrito nuevo vacío. |
-| **GET** | `/api/carts/:cid` | Devuelve los productos de un carrito específico según su ID. |
-| **POST** | `/api/carts/:cid/product/:pid` | Agrega un producto (`pid`) a un carrito (`cid`). |
+1. **Migración a MongoDB:** Toda la persistencia de datos (antes en FileSystem) fue migrada a MongoDB Atlas usando Mongoose.
+2. **Paginación, Filtros y Ordenamiento:** El endpoint de productos (`GET /api/products`) permite consultas avanzadas (`limit`, `page`, `sort`, `query`).
+3. **Populate en Carritos:** Al consultar un carrito específico, los productos referenciados se traen completos mediante el método `.populate()`.
+4. **Gestión Avanzada de Carritos:** Nuevos endpoints para vaciar el carrito, actualizar el array completo de productos, actualizar cantidades y eliminar productos específicos.
+5. **Vistas Integradas:** - `/products`: Catálogo paginado con botones para ver detalles y agregar al carrito.
+   - `/carts/:cid`: Vista detallada de un carrito con sus productos populados.
 
 ---
 
-## 💾 Persistencia de Datos
-La lógica de negocio se maneja a través de dos clases principales:
-* `ProductManager.js`
-* `CartManager.js`
+## 🛠️ Instalación y Uso
 
-La información se guarda y se lee de manera asíncrona utilizando el módulo nativo `fs/promises` en los archivos ubicados en la carpeta `src/data/`.
+1. **Clonar el repositorio:**
+   ```bash
+   git clone [https://github.com/Velde01/Proyecto-Backend-I.git](https://github.com/Velde01/Proyecto-Backend-I.git)
+   cd Proyecto-Backend-I
+   ```
+
+2. **Instalar las dependencias:**
+   ```bash
+   npm install
+   ```
+
+3. **Configurar la Base de Datos:**
+   Asegúrate de que en tu archivo principal la variable `MONGO_URI` tenga un string de conexión válido a tu cluster de MongoDB Atlas.
+
+4. **Levantar el servidor:**
+   ```bash
+   npm start
+   ```
+   El servidor correrá en `http://localhost:8080`.
 
 ---
 
-## 🚀 Instalación y Ejecución
+## 🌐 Endpoints de la API
 
-Para poner en marcha este proyecto en tu entorno local, sigue estos pasos:
+### Productos (`/api/products`)
+- `GET /` : Obtiene todos los productos con paginación, filtros y ordenamiento.
+- `GET /:pid` : Obtiene un producto por su ID.
+- `POST /` : Crea un nuevo producto.
+- `PUT /:pid` : Actualiza un producto existente.
+- `DELETE /:pid` : Elimina un producto.
 
-1. **Clonar el repositorio:** Descarga el código fuente en tu máquina local.
-   `git clone https://github.com/Velde01/Proyecto-Backend-I.git`
-   `cd Proyecto-Backend-I`
+### Carritos (`/api/carts`)
+- `POST /` : Crea un nuevo carrito vacío.
+- `GET /:cid` : Obtiene un carrito por ID con sus productos populados.
+- `POST /:cid/product/:pid` : Agrega un producto al carrito (o incrementa su cantidad).
+- `DELETE /:cid/products/:pid` : Elimina un producto específico del carrito.
+- `PUT /:cid` : Actualiza el carrito entero con un nuevo array de productos.
+- `PUT /:cid/products/:pid` : Actualiza únicamente la cantidad de un producto.
+- `DELETE /:cid` : Vacía el carrito por completo.
 
-2. **Instalar dependencias:** Descarga las librerías necesarias (Express, Socket.io, Handlebars, etc.) definidas en el archivo package.json ejecutando el comando:
-   `npm install`
+---
 
-3. **Ejecutar el servidor:** Inicia la aplicación utilizando el script definido en tu package.json. Esto levantará el servidor en el puerto 8080:
-   `npm start`
+## 🖥️ Vistas (Frontend)
 
-4. **Acceder a la aplicación:** Una vez que la consola confirme que el servidor está corriendo, abre tu navegador y dirígete a:
-   - Vista Estática: http://localhost:8080/
-   - Vista en Tiempo Real: http://localhost:8080/realtimeproducts
+Para probar la interfaz gráfica desde el navegador, ingresa a:
+- **Catálogo:** [http://localhost:8080/products](http://localhost:8080/products)
+- **Carrito de pruebas:** Para probar el carrito, debes crear uno previamente con un `POST` a `/api/carts` y usar ese ID en el frontend.
+
+---
+**Autor:** Mateo Bentos 
+**Curso:** Programación Backend I - Coderhouse
