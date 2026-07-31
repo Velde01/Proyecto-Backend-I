@@ -1,9 +1,10 @@
+require('dotenv').config();
 const app = require('./src/app'); 
 const { Server } = require('socket.io');
 const mongoose = require('mongoose');
 const productModel = require('./src/models/product.model');
 const PORT = 8080;
-const MONGO_URI = 'mongodb+srv://mtbentos_db_user:lileLhn7gltUi9ZJ@backend.sm1hlhv.mongodb.net/?appName=Backend';
+const MONGO_URI = process.env.MONGO_URI;
 
 // Conexión a MongoDB
 mongoose.connect(MONGO_URI)

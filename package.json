@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/Velde01/Proyecto-Backend-I#readme",
   "dependencies": {
+    "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "express-handlebars": "^9.0.1",
     "mongoose-paginate-v2": "^1.9.5",
