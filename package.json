@@ -21,10 +21,14 @@
   },
   "homepage": "https://github.com/Velde01/Proyecto-Backend-I#readme",
   "dependencies": {
+    "bcrypt": "^6.0.0",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "express-handlebars": "^9.0.1",
+    "jsonwebtoken": "^9.0.3",
     "mongoose-paginate-v2": "^1.9.5",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
     "socket.io": "^4.8.3"
   }
 }

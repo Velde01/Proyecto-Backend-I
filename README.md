@@ -1,77 +1,38 @@
-# 🛒 Proyecto Backend I - E-Commerce (Entrega Final)
+# Proyecto E-commerce - Backend II (Entrega 1)
 
-Este repositorio contiene la **Entrega Final** del curso de **Programación Backend I: Desarrollo Avanzado de Backend** en Coderhouse. 
+Este repositorio contiene la primera entrega del curso de **Programación Backend II: Desarrollo Avanzado de Backend** en Coderhouse.
 
-El proyecto consiste en una API RESTful para gestionar el catálogo y carritos de un e-commerce, con vistas dinámicas renderizadas desde el servidor y persistencia de datos en la nube.
+## Objetivos de la Entrega
+El objetivo principal de esta etapa es implementar un sistema robusto de gestión de usuarios, integrando **Autenticación y Autorización** a través de JSON Web Tokens (JWT), encriptación de contraseñas y validación mediante estrategias de Passport.
 
-## 🚀 Tecnologías Utilizadas
+## Tecnologías Utilizadas
+* **Node.js & Express:** Servidor web y ruteo.
+* **MongoDB & Mongoose:** Base de datos NoSQL y modelado (Modelo de Usuario).
+* **Bcrypt:** Encriptación y validación de contraseñas de forma segura (`bcrypt.hashSync`).
+* **JSON Web Token (JWT):** Generación de tokens de sesión para el sistema de login.
+* **Passport & Passport-JWT:** Middleware para interceptar, validar tokens y proteger rutas.
 
-- **Node.js** & **Express.js** (Servidor web y ruteo)
-- **MongoDB Atlas** & **Mongoose** (Base de datos en la nube y ODM)
-- **mongoose-paginate-v2** (Paginación avanzada de productos)
-- **Handlebars** (Motor de plantillas para las vistas)
-- **Socket.io** (Comunicación en tiempo real)
+## Endpoints de Autenticación (`/api/sessions`)
 
-## 🎯 Requisitos Cumplidos en esta Entrega
+| Método | Ruta | Descripción |
+|---|---|---|
+| `POST` | `/register` | Crea un nuevo usuario validando que el email sea único y encriptando su contraseña. |
+| `POST` | `/login` | Valida las credenciales del usuario y devuelve un token JWT válido por 24 horas. |
+| `GET` | `/current` | Ruta protegida mediante la estrategia "current" de Passport. Extrae, valida el token (Bearer Token) y devuelve los datos del usuario logueado. |
 
-1. **Migración a MongoDB:** Toda la persistencia de datos (antes en FileSystem) fue migrada a MongoDB Atlas usando Mongoose.
-2. **Paginación, Filtros y Ordenamiento:** El endpoint de productos (`GET /api/products`) permite consultas avanzadas (`limit`, `page`, `sort`, `query`).
-3. **Populate en Carritos:** Al consultar un carrito específico, los productos referenciados se traen completos mediante el método `.populate()`.
-4. **Gestión Avanzada de Carritos:** Nuevos endpoints para vaciar el carrito, actualizar el array completo de productos, actualizar cantidades y eliminar productos específicos.
-5. **Vistas Integradas:** - `/products`: Catálogo paginado con botones para ver detalles y agregar al carrito.
-   - `/carts/:cid`: Vista detallada de un carrito con sus productos populados.
-
----
-
-## 🛠️ Instalación y Uso
+## Instalación y Ejecución
 
 1. **Clonar el repositorio:**
-   ```bash
-   git clone [https://github.com/Velde01/Proyecto-Backend-I.git](https://github.com/Velde01/Proyecto-Backend-I.git)
-   cd Proyecto-Backend-I
-   ```
+    git clone https://github.com/Velde01/Proyecto-Backend-II.git
 
-2. **Instalar las dependencias:**
-   ```bash
-   npm install
-   ```
+2. **Instalar las dependencias:** Descarga las librerías necesarias ejecutando el siguiente comando (la carpeta `node_modules` está ignorada por defecto).
+    npm install
 
-3. **Configurar la Base de Datos:**
-   Asegúrate de que en tu archivo principal la variable `MONGO_URI` tenga un string de conexión válido a tu cluster de MongoDB Atlas.
+3. **Ejecutar el servidor:** Inicia la aplicación utilizando el script de Node.js[cite: 8].
+    npm start
 
-4. **Levantar el servidor:**
-   ```bash
-   npm start
-   ```
-   El servidor correrá en `http://localhost:8080`.
-
----
-
-## 🌐 Endpoints de la API
-
-### Productos (`/api/products`)
-- `GET /` : Obtiene todos los productos con paginación, filtros y ordenamiento.
-- `GET /:pid` : Obtiene un producto por su ID.
-- `POST /` : Crea un nuevo producto.
-- `PUT /:pid` : Actualiza un producto existente.
-- `DELETE /:pid` : Elimina un producto.
-
-### Carritos (`/api/carts`)
-- `POST /` : Crea un nuevo carrito vacío.
-- `GET /:cid` : Obtiene un carrito por ID con sus productos populados.
-- `POST /:cid/product/:pid` : Agrega un producto al carrito (o incrementa su cantidad).
-- `DELETE /:cid/products/:pid` : Elimina un producto específico del carrito.
-- `PUT /:cid` : Actualiza el carrito entero con un nuevo array de productos.
-- `PUT /:cid/products/:pid` : Actualiza únicamente la cantidad de un producto.
-- `DELETE /:cid` : Vacía el carrito por completo.
-
----
-
-## 🖥️ Vistas (Frontend)
-
-Para probar la interfaz gráfica desde el navegador, ingresa a:
-- **Catálogo:** [http://localhost:8080/products](http://localhost:8080/products)
-- **Carrito de pruebas:** Para probar el carrito, debes crear uno previamente con un `POST` a `/api/carts` y usar ese ID en el frontend.
+4. **Probar la API:** Una vez que la consola confirme que el servidor está corriendo[cite: 8], estará disponible de forma local en el puerto 8080.
+   * `http://localhost:8080/api/sessions`
 
 ---
 **Autor:** Mateo Bentos 
