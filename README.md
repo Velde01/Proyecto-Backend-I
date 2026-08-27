@@ -36,4 +36,4 @@ El objetivo principal de esta etapa es implementar un sistema robusto de gestió
 
 ---
 **Autor:** Mateo Bentos 
-**Curso:** Programación Backend I - Coderhouse
+**Curso:** Programación Backend II - Coderhouse
